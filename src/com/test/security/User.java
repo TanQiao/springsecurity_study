@@ -9,9 +9,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Administrator on 2015/12/12.
- */
 public class User implements UserDetails{
     private String id;
     private String username;
@@ -58,7 +55,7 @@ public class User implements UserDetails{
         for(Role role:roles){
             grantedAuthorityList.add(new GrantedAuthorityImpl(role.getName()));
         }
-        return grantedAuthories.toArray(new GrantedAuthority[roles.size()]);
+        return grantedAuthorityList;
     }
 
     @Override
