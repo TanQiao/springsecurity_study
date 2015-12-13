@@ -19,7 +19,9 @@
            </authentication-provider>
     </authentication-manager>-->
     <authentication-manager>
-           <authentication-provider user-service-ref='myUserDetailsService'/>
+           <authentication-provider user-service-ref='myUserDetailsService'>
+               <password-encoder hash="md5"></password-encoder>
+           </authentication-provider>
     </authentication-manager>
     <!--<authentication-manager>
         <authentication-provider>

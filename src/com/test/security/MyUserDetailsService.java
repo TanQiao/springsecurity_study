@@ -17,10 +17,11 @@ import java.util.Set;
  * Created by Administrator on 2015/12/12.
  */
 public class MyUserDetailsService extends HibernateDaoSupport implements UserDetailsService{
+    private  Connection conn;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            Connection conn = JdbcUtils.getConnection();
+            conn = JdbcUtils.getConnection();
             String sql = "select U.username as username,U.password as password,U.accountEnabled AS 'enabled' from user U where U.username=?";
             String sql2 = "select c.username,r.name as authority from role r,(select * from user u,user_role ur where u.id = ur.user_id) c where c.role_id = r.id and c.username = ?";
             PreparedStatement psmt1 = conn.prepareStatement(sql);
@@ -48,6 +49,12 @@ public class MyUserDetailsService extends HibernateDaoSupport implements UserDet
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
